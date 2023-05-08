@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] float forcaPrincipal = 100f;
     [SerializeField] float forcaDeRotacao = 100f;
     Rigidbody rb;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -25,7 +26,15 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
             rb.AddRelativeForce(Vector3.up * forcaPrincipal *Time.deltaTime);
+        }
+        else 
+        {
+            audioSource.Stop();
         }
 
     }
